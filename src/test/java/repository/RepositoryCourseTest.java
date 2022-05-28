@@ -48,4 +48,12 @@ class RepositoryCourseTest {
 
     }
 
+    @Test
+    public  void returnCurs(){
+        RepositoryCourse repositoryCourse = new RepositoryCourse();
+
+        Course curs=repositoryCourse.returnCursNume("matematica");
+        System.out.println(curs.toString());
+    }
+
 }

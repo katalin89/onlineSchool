@@ -6,6 +6,12 @@ public class Enrolment {
     private int courseId;
     private String  createdAt;
 
+    public  Enrolment(int studentId,int courseId,String createdAt){
+        this.studentId=studentId;
+        this.courseId=courseId;
+        this.createdAt=createdAt;
+    }
+
     public  Enrolment(int  id,int studentId,int courseId,String createdAt){
         this.id=id;
         this.studentId=studentId;

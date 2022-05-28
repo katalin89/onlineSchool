@@ -59,5 +59,37 @@ public class RepositoryCourse extends Repository{
         }
 return  courses;
     }
+
+
+
+    private ResultSet returnCursName(String name){
+
+        executeStatement(String.format(" select  *  from  course  where  name = '%s'",name));
+        try{
+            return  statement.getResultSet();
+        }catch (Exception e){
+            System.out.println("Nu s-a execuat schita");
+            return  null;
+        }
+    }
+
+    public  Course returnCursNume(String nume){
+        ResultSet set=returnCursName(nume);
+
+        List<Course>courses= new ArrayList<>();
+        try {
+            while(set.next()){
+                courses.add(new Course(set.getInt(1),set.getString(2),set.getString(3),set.getInt(4)));
+            }
+            return  courses.get(0);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  null;
+
+
+
+    }
+
 }
 

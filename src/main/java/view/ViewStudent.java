@@ -1,15 +1,30 @@
 package view;
 
+
+import model.Course;
+import model.Enrolment;
+import model.Student;
+
+
+import static view.View.*;
+
+import java.util.List;
 import java.util.Scanner;
 
-public class ViewStudent extends  View{
+public class ViewStudent {
+
+    Student student;
     public  ViewStudent(){
-        super();
+
+        student= new Student(7,"Tatar","Mihai","mihai@yahoo.com",21,8.50);
     }
 
     public  void meniu(){
-        System.out.println("Apasa tasta 1 pentru a  insera un student");
-        System.out.println("Apasa tasta 2 pentru a sterge un student");
+        System.out.println("Apasa tasta 1 pentru a afla cursurile studentului");
+        System.out.println("Apasa tasta 2 pentru Inscrie la curs");
+        System.out.println("Apasa tasta 3 sa se stearga de la un curs");
+
+
 
 
     }
@@ -22,19 +37,37 @@ public class ViewStudent extends  View{
             meniu();
             alege=Integer.parseInt(scanner.nextLine());
             switch (alege){
-                case 1: insertStudent();
+                case 1: cursurileStudentului();
                 break;
+                case 2:inscrieCurs();
+                break;
+
             }
 
         }
     }
 
-    public  void insertStudent(){
+    public void cursurileStudentului(){
+        System.out.println("Sunt inscrisi la cursuri");
+       List<String>cursuri=personRepository.allStudentCurses(student.getId());
+       for(String c:cursuri){
+           System.out.println(c.toString());
+       }
+    }
+
+    public  void inscrieCurs(){
         Scanner scanner=new Scanner(System.in);
-        System.out.println("Introduceti id-ul studentului");
-        int id=Integer.parseInt(scanner.nextLine());
-        System.out.println("Introduceti first_name");
-        String firrst_name=scanner.nextLine();
+        System.out.println("Indtroduceti numele cursului la care doriti sa va inscrieti");
+        String name=scanner.nextLine();
+         Course course= courseRepository.returnCursNume(name);
+
+         if(course!=null){
+             Enrolment e=new Enrolment(student.getId(),course.getId(),"1999-09-19");
+                     enrolmetRepository.insertEnrolment(e);
+
+         }
+
+        System.out.println(" V-ati inscris la "+course.getName());
 
     }
 }

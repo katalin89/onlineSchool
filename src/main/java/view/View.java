@@ -1,17 +1,10 @@
 package view;
 
-import repository.Repository;
-import repository.RepositoryBook;
-import repository.RepositoryCourse;
-import repository.RepositoryPerson;
+import repository.*;
 
-public  abstract class View {
-
-
-    public  static final RepositoryBook bookRepository= new RepositoryBook();
-    public  static final RepositoryCourse courseRepository=new RepositoryCourse();
-    public  static  final RepositoryPerson personRepository=new RepositoryPerson();
-
-
-
+public  interface  View {
+    RepositoryBook bookRepository = new RepositoryBook();
+    RepositoryCourse courseRepository = new RepositoryCourse();
+    RepositoryPerson personRepository = new RepositoryPerson();
+    RepositotyEnrolment enrolmetRepository = new RepositotyEnrolment();
 }
