@@ -42,6 +42,12 @@ public class RepositoryPerson extends Repository{
         String sterge=String.format("delete from person where id= %d",id);
         executeStatement(sterge);
     }
+    public  void udateNrDeOreProfesor(int id,int nrDeOre){
+        String update="";
+        update+=String.format(" update person set numarDeCursuri = %d  where id= %d",nrDeOre,id);
+        executeStatement(update);
+    }
+
 
     private ResultSet allStudentCourse(int id){
         executeStatement("select name from enrolment " +
@@ -76,8 +82,44 @@ public class RepositoryPerson extends Repository{
     }
 
 
+    public Person login(String username,String password){
+        String login=String.format("select * from person where username ='%s' and password='%s'",username,password);
+        executeStatement(login);
+        try{
+             ResultSet result = statement.getResultSet();
+             if (result.first())
+                 return new Person(result.getInt(1),
+                         result.getString(2),
+                         result.getString(3),
+                         result.getString(4),
+                         result.getInt(5),
+                         result.getString(6),
+                         result.getString(7),
+                         result.getString(8));
+             else return null;
+        }catch (Exception e){
+            System.out.println("Nu s-a executat schita");
+            return  null;
+        }
+    }
 
+    private ResultSet allBook(){
+        executeStatement("select * from book");
+        try{
+            return  statement.getResultSet();
+        }catch (Exception e){
+            System.out.println("Nu s-a executat schita");
+            return  null;
+        }
+    }
 
+/*   public Persoana login(String nume, String parola) {
+        for (int i = 0; i < persoane.size(); i++) {
+            if (persoane.get(i).getNume().equals(nume) && persoane.get(i).getParola().equals(parola))
+                return persoane.get(i);
+        }
+        return null;
+    }*/
 
 
 }

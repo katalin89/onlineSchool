@@ -5,8 +5,8 @@ public class Profesor  extends  Person{
 
     private  int nrDeCursuri;
 
-    public  Profesor(int id,String firstName,String lastName,String email,int age,int nrDeCursuri){
-        super(id,firstName,lastName,email,age,"profesor");
+    public  Profesor(int id,String firstName,String lastName,String email,int age,String username,String password,int nrDeCursuri){
+        super(id,firstName,lastName,email,age,"profesor",username,password);
         this.nrDeCursuri=nrDeCursuri;
     }
 

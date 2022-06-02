@@ -16,7 +16,7 @@ class RepositoryPersonTest {
     @Test
     void insertPerson() {
         RepositoryPerson repositoryPerson = new RepositoryPerson();
-        Student student = new Student(1, "Dumitrescu", "Alessia", "alessia@yahoo.com", 19, 8.80);
+        Student student = new Student(1, "Dumitrescu", "Alessia", "alessia@yahoo.com", 19, "allesia","23645",8.80);
         repositoryPerson.insertPerson(student);
     }
 
@@ -24,7 +24,7 @@ class RepositoryPersonTest {
     @Test
     void insertProfesor() {
         RepositoryPerson repositoryPerson = new RepositoryPerson();
-        Profesor profesor = new Profesor(1, "Anton", "Valeriu", "vali@yahoo.com", 20, 18);
+        Profesor profesor = new Profesor(1, "Anton", "Valeriu", "vali@yahoo.com", 20, "vali","653654",18);
         repositoryPerson.insertPerson(profesor);
     }
 

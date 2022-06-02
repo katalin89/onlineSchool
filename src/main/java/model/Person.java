@@ -9,14 +9,18 @@ public class Person {
     private String email;
     private int age;
     private String type;
+   private String username;
+   private String password;
 
-    public Person(int id, String firstName, String lastName, String email, int age, String type) {
+    public Person(int id, String firstName, String lastName, String email, int age, String type,String username,String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.age = age;
         this.type = type;
+        this.username=username;
+        this.password=password;
 
     }
 
@@ -68,10 +72,26 @@ public class Person {
         this.type = type;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         String text = "";
-        text += id + "," + firstName + "," + lastName + "," + email + "," + age + "," + type;
+        text += id + "," + firstName + "," + lastName + "," + email + "," + age + "," + type+","+username+","+password;
         return text;
     }
 

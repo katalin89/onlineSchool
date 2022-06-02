@@ -5,8 +5,8 @@ import java.util.List;
 public class Student extends  Person{
 
     private double medie;
-    public Student(int id,String firstName,String lastName,String email,int age,double medie){
-        super(id,firstName,lastName,email,age,"student");
+    public Student(int id,String firstName,String lastName,String email,int age,String username,String password,double medie){
+        super(id,firstName,lastName,email,age,"student",username,password);
         this.medie=medie;
     }
 

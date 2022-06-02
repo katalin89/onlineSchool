@@ -12,7 +12,7 @@ class RepositoryBookTest {
     @Test
     public  void insert(){
         RepositoryBook repositoryBook=new RepositoryBook();
-        Book book=new Book(10,"Matematica","2003-02-02",2);
+        Book book=new Book(10,"Engleza","2003-02-02",2);
         repositoryBook.insertBook(book);
     }
 

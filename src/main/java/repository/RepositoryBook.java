@@ -53,8 +53,21 @@ public class RepositoryBook extends  Repository{
             System.out.println("Nu s-a executat schita");
             return  null;
         }
-
     }
+
+    private ResultSet studentsBook(int id){
+        executeStatement(String.format("select * from book where student_id=%d",id));
+        try{
+            return  statement .getResultSet();
+        }catch (Exception e){
+            System.out.println("Nu s-a executat schita");
+
+            return  null;
+        }
+
+
+
+}
 
     public List<Book> allBooks(){
         ResultSet set= allBook();
@@ -68,5 +81,19 @@ public class RepositoryBook extends  Repository{
         }
         return  books;
 
+    }
+
+    public List<Book>cartileStudentului(int id){
+        ResultSet set=studentsBook(id);
+        List<Book>books=new ArrayList<>();
+        try{
+            while(set.next()){
+                books.add(new Book(set.getInt(1),set.getString(3),set.getString(4), set.getInt(2)));
+
+            }
+        }catch (Exception e){
+            System.out.println("Nu s-a creat lista");
+        }
+        return  books;
     }
 }
