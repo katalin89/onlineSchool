@@ -86,8 +86,6 @@ public class RepositoryCourse extends Repository {
             e.printStackTrace();
         }
         return null;
-
-
     }
 
     private ResultSet returnCursulProf(String firstName) {
@@ -108,42 +106,55 @@ public class RepositoryCourse extends Repository {
         try {
             while (set.next()) {
                 cursuri.add(set.getString(1));
-
             }
             return cursuri;
         } catch (Exception e) {
             e.printStackTrace();
-
         }
         return null;
     }
 
     //return departametul la care preda prodesorul
-    private ResultSet returnDepartament(String firstName){
-        executeStatement(String.format("select department from course join person p on course.profesor_id = p.id where first_name='%s'",firstName));
+    private ResultSet returnDepartament(String firstName) {
+        executeStatement(String.format("select department from course join person p on course.profesor_id = p.id where first_name='%s'", firstName));
 
-        try{
+        try {
             return statement.getResultSet();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Nu s-a executat schita");
-            return  null;
+            return null;
         }
     }
 
-    public  List getDepartmetsProf(String firstName){
-       ResultSet set=returnDepartament(firstName);
-       List<String>departments=new ArrayList<>();
-       try{
-           while(set.next()){
-               departments.add(set.getString(1));
+    public List getDepartmetsProf(String firstName) {
+        ResultSet set = returnDepartament(firstName);
+        List<String> departments = new ArrayList<>();
+        try {
+            while (set.next()) {
+                departments.add(set.getString(1));
 
-           }
-           return  departments;
-       }catch ( Exception e){
-           e.printStackTrace();
-           return  null;
-       }
+            }
+            return departments;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int getStudentNumberOfCourse(String name){
+        executeStatement(String.format("select count(*) from enrolment e\n" +
+                "    join course c on c.id = e.course_id\n" +
+                "    where c.name='%s'\n" +
+                "    group by e.student_id;\n", name));
+        try {
+             ResultSet resultSet = statement.getResultSet();
+             resultSet.next();
+             return resultSet.getInt(1);
+        } catch (Exception e) {
+            System.out.println("Nu s-a executat schita");
+            return 0;
+        }
     }
 
 

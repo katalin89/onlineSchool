@@ -41,5 +41,20 @@ class RepositoryPersonTest {
 
     }
 
+    @Test
+    public  void login(){
+        RepositoryPerson repositoryPerson = new RepositoryPerson();
+        System.out.println(repositoryPerson.login("rebe","335"));
+    }
+    //moraru es profesor
+    @Test
+    public void allStudents(){
+        RepositoryPerson repositoryPerson = new RepositoryPerson();
+        List<String>students=repositoryPerson.allProfesorStudents(1);
+        for(String a:students){
+            System.out.println(a.toString());
+        }
+    }
+
 
 }
