@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class ViewProfesor extends View {
     Profesor profesor;
 
-    public ViewProfesor(Profesor profesor){
-        this.profesor =profesor;
+    public ViewProfesor(Profesor profesor) {
+        this.profesor = profesor;
         play();
     }
 
@@ -25,6 +25,8 @@ public class ViewProfesor extends View {
         System.out.println("Apasa tasta 3 pentru a afla la ce departament preda profesorul");
         System.out.println("Apasa tasta 4 pentru a afla cati elevi are profesorul");
         System.out.println("Apasa tasta 5 pentru a afla cati elevi are in cursul respectiv ");
+        System.out.println("Apasa tasta 6 pentru a modifica profesorul alocat unei curs ");
+        System.out.println("Apasa tasta 7 pentru a afisa toti profesori a unui departament ");
     }
 
     public void play() {
@@ -50,6 +52,43 @@ public class ViewProfesor extends View {
                 case 5:
                     printStudentNumberOfCourse();
                     break;
+                case 6:
+                    inscriereProfesorLaCurs();
+                    break;
+                case 7:
+                    printProfesoriLaDepartament();
+                    break;
+            }
+        }
+    }
+
+    private void printProfesoriLaDepartament() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Introdiceti numele departamentului:");
+        String nume = scanner.nextLine();
+        List<String> departamente = personRepository.getProfesorDepartment(nume);
+        for (String d : departamente) {
+            System.out.println(d);
+        }
+    }
+
+    private void inscriereProfesorLaCurs() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Introdiceti numele cursului:");
+        String nume = scanner.nextLine();
+        Course course = courseRepository.getCourseByName(nume);
+        if (course != null) {
+            System.out.println("Cursul este alocat profesorului cu id: " + course.getProfesorId() + " suprascriem ?");
+            System.out.println("1. Da");
+            System.out.println("2. Nu");
+
+            String alegere = scanner.nextLine();
+            if (alegere.equals("1")) {
+                courseRepository.updateProfesor(course.getId(), profesor.getId());
+                System.out.println("Cursul cu nume: " + course.getName() + " a fost alocat la profesor:"
+                        + profesor.getFirstName() + " " + profesor.getLastName());
+            } else {
+                System.out.println("Alocare nu a fost facuta.");
             }
         }
     }
@@ -61,7 +100,7 @@ public class ViewProfesor extends View {
 
         int studentCount = courseRepository.getStudentNumberOfCourse(nume);
 
-        System.out.println("Numarul elevilor inscrisi la curs:"+studentCount);
+        System.out.println("Numarul elevilor inscrisi la curs:" + studentCount);
     }
 
     public void afiseazaCursProf() {
@@ -72,7 +111,6 @@ public class ViewProfesor extends View {
         for (String c : courses) {
             System.out.println(c);
         }
-
     }
 
     public void updateNrOrelor() {

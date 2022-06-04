@@ -182,6 +182,23 @@ public class RepositoryPerson extends Repository {
         return Collections.emptyList();
     }
 
+    public List<String> getProfesorDepartment(String nume){
+        executeStatement(String.format("select  first_name, last_name  from course c\n" +
+                "join person p on p.id=c.profesor_id\n" +
+                " where c.department='%s'", nume));
+        try {
+             ResultSet set = statement.getResultSet();
+             ArrayList<String> numeProfesor = new ArrayList<>();
+             while (set.next()) {
+                numeProfesor.add(set.getString(1) + " " + set.getString(2));
+            }
+             return numeProfesor;
+        } catch (Exception e) {
+            System.out.println("Nu s-a executat schita");
+            return null;
+        }
+    }
+
 /*
 
     public List<String>allStudentCurses(int id){

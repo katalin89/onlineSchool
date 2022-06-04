@@ -157,5 +157,27 @@ public class RepositoryCourse extends Repository {
         }
     }
 
+    public Course getCourseByName(String name){
+        Course course=null;
+        executeStatement(String.format("select * from course where course.name='%s'", name));
+        try {
+            ResultSet resultSet = statement.getResultSet();
+            resultSet.next();
+            course = new Course(resultSet.getInt(1),resultSet.getString(2),
+                    resultSet.getString(3),resultSet.getInt(4));
+            return course;
+        } catch (Exception e) {
+            System.out.println("Nu s-a executat schita");
+            return null;
+        }
+    }
+
+
+    public  void updateProfesor(int courseId, int profId){
+        String update = "";
+        update += String.format("update course set profesor_id= '%d'", profId);
+        update += String.format("where  id = %d", courseId);
+        executeStatement(update);
+    }
 
 }

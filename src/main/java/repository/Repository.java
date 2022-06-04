@@ -1,6 +1,8 @@
 package repository;
 
 
+import model.Course;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -31,8 +33,6 @@ public  abstract class Repository {
             System.out.println("Nu am reusit" + execute);
         }
     }
-
-
 }
 
 
