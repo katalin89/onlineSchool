@@ -47,7 +47,7 @@ public class ViewLogin extends View {
         if (logat == null) {
             System.out.println("Nu este persoana");
         } else {
-            if (logat.getType() == "student") {
+            if (logat.getType().equals("student")) {
                 Student student = personRepository.getStudentById(logat.getId());
                 ViewStudent viewStudent = new ViewStudent(student);
             } else {

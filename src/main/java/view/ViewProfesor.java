@@ -27,6 +27,9 @@ public class ViewProfesor extends View {
         System.out.println("Apasa tasta 5 pentru a afla cati elevi are in cursul respectiv ");
         System.out.println("Apasa tasta 6 pentru a modifica profesorul alocat unei curs ");
         System.out.println("Apasa tasta 7 pentru a afisa toti profesori a unui departament ");
+        System.out.println("Apasa tasta 8 pentru a modifica parola ");
+        System.out.println("Apasa tasta 9 pentru a lista toate profesorii ");
+        System.out.println("Apasa tasta 10 pentru a lista studentii in ordine descrescator dupa medie ");
     }
 
     public void play() {
@@ -58,7 +61,46 @@ public class ViewProfesor extends View {
                 case 7:
                     printProfesoriLaDepartament();
                     break;
+                case 8:
+                    modificareParola();
+                    break;
+                case 9:
+                    printTotiProfesori();
+                    break;
+                case 10:
+                    printMedieElevilor();
+                    break;
             }
+        }
+    }
+
+    private void printMedieElevilor() {
+        System.out.println("Studenti in ordine descrescator dupa medie:");
+        List<String> students = personRepository.getAllStudentsOrdonatMedie();
+        for (String s : students) {
+            System.out.println(s);
+        }
+    }
+
+    private void printTotiProfesori() {
+        System.out.println("Profesorii din unitatea de invatamant: ");
+        List<String> profesors= personRepository.getAllProfesors();
+        for (String p : profesors) {
+            System.out.println(p);
+        }
+    }
+
+    private void modificareParola() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Introduceti parola actuala: ");
+        String parola = scanner.nextLine();
+        if (parola.equals(profesor.getPassword())){
+            System.out.println("Introduceti parola noua: ");
+            String newParola = scanner.nextLine();
+            personRepository.updatePassword(profesor.getId(),newParola);
+            System.out.println("Parola modificata cu succes.");
+        } else {
+            System.out.println("Parola nu a fost modificata.");
         }
     }
 
@@ -132,12 +174,11 @@ public class ViewProfesor extends View {
         for (String d : departments) {
             System.out.println(d);
         }
-
     }
 
     public void allStudentiiProfesorului() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Introduceti idul profesorului");
+        System.out.println("Introduceti idul profesorului:");
         int id = scanner.nextInt();
         List<String> studenti = personRepository.allProfesorStudents(id);
         for (String s : studenti) {
@@ -146,10 +187,3 @@ public class ViewProfesor extends View {
     }
 
 }
-
-
-/*select first_name  from  enrolment
-join person p on enrolment.student_id = p.id
-join course c on c.id = enrolment.course_id
-where course_id in (select course_id from course where c.profesor_id=1 );
-*/

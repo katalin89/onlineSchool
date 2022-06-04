@@ -9,12 +9,18 @@ public class Book {
     private int studentId;
 
     public Book(){};
+
     public  Book(int id,String name,String createdAt,int studentId){
         this.id=id;
         this.name=name;
         this.createdAt=createdAt;
         this.studentId =studentId;
+    }
 
+    public  Book(String name,String createdAt,int studentId){
+        this.name=name;
+        this.createdAt=createdAt;
+        this.studentId =studentId;
     }
 
     public int getId() {

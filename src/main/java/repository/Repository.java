@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public  abstract class Repository {
     private String JdbURL = "jdbc:mysql://localhost:3306/online_school_db";
@@ -33,6 +34,7 @@ public  abstract class Repository {
             System.out.println("Nu am reusit" + execute);
         }
     }
+
 }
 
 

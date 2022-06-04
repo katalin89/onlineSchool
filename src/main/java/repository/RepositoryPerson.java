@@ -34,7 +34,6 @@ public class RepositoryPerson extends Repository {
             insertTo += " ) ";
             executeStatement(insertTo);
         }
-
     }
 
     public void stergePersonById(int id) {
@@ -54,9 +53,9 @@ public class RepositoryPerson extends Repository {
                         result.getString(3),
                         result.getString(4),
                         result.getInt(5),
-                        result.getString(6),
-                        result.getString(7),
-                        result.getDouble(8));
+                        result.getString(9),
+                        result.getString(10),
+                        result.getDouble(7));
             } else {
                 return null;
             }
@@ -78,8 +77,8 @@ public class RepositoryPerson extends Repository {
                         result.getString(3),
                         result.getString(4),
                         result.getInt(5),
-                        result.getString(6),
-                        result.getString(7),
+                        result.getString(9),
+                        result.getString(10),
                         result.getInt(8));
             } else {
                 return null;
@@ -155,7 +154,6 @@ public class RepositoryPerson extends Repository {
             System.out.println("Nu s-a executat schita");
             return null;
         }
-
     }
 
     private ResultSet allProdfesorsStudent(int id) {
@@ -182,51 +180,117 @@ public class RepositoryPerson extends Repository {
         return Collections.emptyList();
     }
 
-    public List<String> getProfesorDepartment(String nume){
+    public List<String> getProfesorDepartment(String nume) {
         executeStatement(String.format("select  first_name, last_name  from course c\n" +
                 "join person p on p.id=c.profesor_id\n" +
                 " where c.department='%s'", nume));
         try {
-             ResultSet set = statement.getResultSet();
-             ArrayList<String> numeProfesor = new ArrayList<>();
-             while (set.next()) {
+            ResultSet set = statement.getResultSet();
+            ArrayList<String> numeProfesor = new ArrayList<>();
+            while (set.next()) {
                 numeProfesor.add(set.getString(1) + " " + set.getString(2));
             }
-             return numeProfesor;
+            return numeProfesor;
         } catch (Exception e) {
             System.out.println("Nu s-a executat schita");
             return null;
         }
     }
 
-/*
-
-    public List<String>allStudentCurses(int id){
-        ResultSet set=allStudentCourse(id);
-        List<String>courses=new ArrayList<>();
-        try{
-            while(set.next()){
-
-
-                courses.add(set.getString(1));
-
+    public List<String> getProfesorStudent(int studentId) {
+        executeStatement(String.format("select prof.first_name, prof.last_name  from person s\n" +
+                "join enrolment e on s.id=e.student_id\n" +
+                "join course c on e.course_id = c.id\n" +
+                "join person prof on prof.id = c.profesor_id\n" +
+                "where s.id='%d'\n" +
+                "group by prof.id", studentId));
+        try {
+            ResultSet set = statement.getResultSet();
+            ArrayList<String> numeProfesor = new ArrayList<>();
+            while (set.next()) {
+                numeProfesor.add(set.getString(1) + " " + set.getString(2));
             }
-
-            return  courses;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return numeProfesor;
+        } catch (Exception e) {
+            System.out.println("Nu s-a executat schita");
+            return null;
         }
-
-        return Collections.emptyList();
     }
 
+    public void updatePassword(int id, String newParola) {
+        String update = "";
+        update += String.format(" update person set password = '%s'  where id= %d", newParola, id);
+        executeStatement(update);
+    }
 
+    public void updateEmail(int id, String email) {
+        String update = "";
+        update += String.format(" update person set email = '%s'  where id= %d", email, id);
+        executeStatement(update);
+    }
 
+    public List<String> getAllStudents() {
+        executeStatement("select first_name, last_name from person where type='student'");
+        try {
+            ResultSet set = statement.getResultSet();
+            ArrayList<String> numeStudent = new ArrayList<>();
+            while (set.next()) {
+                numeStudent.add(set.getString(1) + " " + set.getString(2));
+            }
+            return numeStudent;
+        } catch (Exception e) {
+            System.out.println("Nu s-a executat schita");
+            return null;
+        }
+    }
 
-select first_name  from  enrolment
-join person p on enrolment.student_id = p.id
-join course c on c.id = enrolment.course_id
-where course_id in (select course_id from course where c.profesor_id=1 );*/
+    public List<String> getAllProfesors() {
+        executeStatement("select first_name, last_name from person where type='profesor'");
+        try {
+            ResultSet set = statement.getResultSet();
+            ArrayList<String> numeProfesor = new ArrayList<>();
+            while (set.next()) {
+                numeProfesor.add(set.getString(1) + " " + set.getString(2));
+            }
+            return numeProfesor;
+        } catch (Exception e) {
+            System.out.println("Nu s-a executat schita");
+            return null;
+        }
+    }
 
+    public List<String> getAllStudentsOrdonatMedie() {
+        executeStatement("select first_name, last_name, medie from person where type='student' order by medie desc");
+        try {
+            ResultSet set = statement.getResultSet();
+            ArrayList<String> numeStudent = new ArrayList<>();
+            while (set.next()) {
+                numeStudent.add(set.getString(1) + " " + set.getString(2) + " " + set.getString(3));
+            }
+            return numeStudent;
+        } catch (Exception e) {
+            System.out.println("Nu s-a executat schita");
+            return null;
+        }
+    }
+
+    public List<String> getStudentsCurs(String courseName) {
+        executeStatement(String.format("select distinct p.id, first_name, last_name from person p\n" +
+                "join enrolment e on e.student_id=p.id\n" +
+                "join course c on e.course_id = c.id\n" +
+                "where c.name='%s'", courseName));
+        try {
+            ResultSet resultSet = statement.getResultSet();
+            ArrayList<String> students = new ArrayList<String>();
+            while (resultSet.next()) {
+                students.add(resultSet.getString(2) + " " + resultSet.getString(3) );
+            }
+            return students;
+
+        } catch (Exception e) {
+            System.out.println("Nu s-a executat schita");
+            return null;
+        }
+    }
 
 }

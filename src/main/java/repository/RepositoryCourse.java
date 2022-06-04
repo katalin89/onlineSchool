@@ -61,9 +61,7 @@ public class RepositoryCourse extends Repository {
         return courses;
     }
 
-
     private ResultSet returnCursName(String name) {
-
         executeStatement(String.format(" select  *  from  course  where  name = '%s'", name));
         try {
             return statement.getResultSet();
@@ -171,7 +169,6 @@ public class RepositoryCourse extends Repository {
             return null;
         }
     }
-
 
     public  void updateProfesor(int courseId, int profId){
         String update = "";
