@@ -1,6 +1,7 @@
 package view;
 
 
+import exception.BookNotFoundException;
 import model.*;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class ViewStudent extends View {
         System.out.println("Apasa tasta 6 pentru a adauga un carte");
         System.out.println("Apasa tasta 7 pentru a sterge un carte");
         //detalii student
-        System.out.println("Apasa taste 8 pentru a lista profesori");
+        System.out.println("Apasa taste 8 pentru a lista profesorii");
         System.out.println("Apasa tasta 9 pentru a lista detaliile unei student");
         System.out.println("Apasa tasta 10 pentru a modifica parola");
         System.out.println("Apasa tasta 11 pentru a modifica adresa email");
@@ -153,7 +154,7 @@ public class ViewStudent extends View {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Introduceti id-ul cartelui:");
         int id = scanner.nextInt();
-        bookRepository.stergeBookById(id);
+        //bookRepository.stergeBookById(id);
         System.out.println("Cartea a fost stearsa cu succes.");
     }
 
@@ -165,7 +166,12 @@ public class ViewStudent extends View {
         String dateCreated = scanner.nextLine();
 
         Book book= new Book(nume,dateCreated, student.getId() );
-        bookRepository.insertBook(book);
+        try {
+            bookRepository.insertBook(book);
+        }catch (BookNotFoundException e){
+            e.printStackTrace();;
+        }
+
         System.out.println("Cartea a fost adaugata cu succes");
     }
 

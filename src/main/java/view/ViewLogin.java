@@ -64,7 +64,3 @@ public class ViewLogin extends View {
         String password = "";
     }
 }
-/*
-
-
-    }*/

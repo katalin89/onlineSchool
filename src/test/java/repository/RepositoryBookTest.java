@@ -1,5 +1,6 @@
 package repository;
 
+import exception.BookNotFoundException;
 import model.Book;
 import org.junit.jupiter.api.Test;
 
@@ -13,23 +14,49 @@ class RepositoryBookTest {
     public  void insert(){
         RepositoryBook repositoryBook=new RepositoryBook();
         Book book=new Book(10,"Engleza","2003-02-02",2);
-        repositoryBook.insertBook(book);
-    }
-
+//        assertThrows(BookNotFoundException.class,()->{
+//            repositoryBook.allBooks();
+//        });
+//        try {
+//            repositoryBook.insertBook(book);
+//        }catch (BookNotFoundException e){
+//            e.printStackTrace();
+//        }
+//    }
+/*assertThrows(MasinaExistsException.class, () -> {
+            controllerMasina.delete("Opel");
+        });*/
 
     @Test
     public  void stergeById(){
         RepositoryBook repositoryBook=new RepositoryBook();
-       repositoryBook.stergeBookById(5);
+        assertThrows(BookNotFoundException.class,()->{
+            repositoryBook.stergeBookById(8);
+        });
+
     }
 
+    @Test
+    public  void isBook(){
+        RepositoryBook repositoryBook=new RepositoryBook();
+        assertThrows(BookNotFoundException.class,()->{
+            System.out.println( repositoryBook.findBooks(15).toString());
+        });
+        try {
+            System.out.println(repositoryBook.findBooks(6).toString());
+        }catch (BookNotFoundException e){
+            e.printStackTrace();
+        }
+
+
+    }
 
     @Test
     public  void updateCreatedAt(){
         RepositoryBook repositoryBook=new RepositoryBook();
         repositoryBook.updateCreatedAt(1,"2022-12-12");
     }
-    @Test
+
     public  void deleteNume(){
         RepositoryBook repositoryBook=new RepositoryBook();
         repositoryBook.deleteNume("ceva");

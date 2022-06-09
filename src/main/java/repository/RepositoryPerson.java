@@ -42,7 +42,7 @@ public class RepositoryPerson extends Repository {
     }
 
     public Student getStudentById(int id) {
-        String login = String.format("select * from person where id ='%d'", id);
+        String login = String.format("select * from person where id = %d", id);
         executeStatement(login);
         try {
             ResultSet result = statement.getResultSet();
@@ -185,7 +185,7 @@ public class RepositoryPerson extends Repository {
                 "join person p on p.id=c.profesor_id\n" +
                 " where c.department='%s'", nume));
         try {
-            ResultSet set = statement.getResultSet();
+            ResultSet set = statement.getResultSet();//un object care contine rezultatul queriului
             ArrayList<String> numeProfesor = new ArrayList<>();
             while (set.next()) {
                 numeProfesor.add(set.getString(1) + " " + set.getString(2));
