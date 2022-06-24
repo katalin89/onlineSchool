@@ -19,7 +19,6 @@ public class RepositoryPerson extends Repository {
     public void insertPerson(Person person) {
         String insertTo = "";
 
-
         if (person.getType() == "profesor") {
             Profesor profesor = (Profesor) person;
             insertTo = ("insert into person(first_name,last_name,email,age,type,numarDeCursuri)  values (");

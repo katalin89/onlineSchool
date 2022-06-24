@@ -166,11 +166,7 @@ public class ViewStudent extends View {
         String dateCreated = scanner.nextLine();
 
         Book book= new Book(nume,dateCreated, student.getId() );
-        try {
-            bookRepository.insertBook(book);
-        }catch (BookNotFoundException e){
-            e.printStackTrace();;
-        }
+        bookRepository.insertBook(book);
 
         System.out.println("Cartea a fost adaugata cu succes");
     }
